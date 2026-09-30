@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="navy">#101D33</color>
+    <color name="navy_2">#17263F</color>
+    <color name="brand">#7F00FF</color>
+    <color name="cyan">#00E7F0</color>
+    <color name="ink">#1B2430</color>
+    <color name="muted">#6A7688</color>
+    <color name="paper">#FFFFFF</color>
+    <color name="canvas">#F3F5F8</color>
+    <color name="line">#E1E6EE</color>
+</resources>

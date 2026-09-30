@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="cdxi vantage">
+  <rect width="32" height="32" rx="7" fill="#101D33"/>
+  <g transform="translate(16,16) scale(0.215) translate(-79,-50)">
+    <path fill="#7F00FF" d="M60 10A40 40 0 0 0 20 50 40 40 0 0 0 60 90V70A20 20 0 0 1 40 50 20 20 0 0 1 60 30Z"/>
+    <path fill="#00FFFF" d="M70 10 110 50 70 90h28l40-40L98 10Z"/>
+  </g>
+</svg>

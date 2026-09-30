@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/login",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "cdxi vantage",
+      "hasCanvas": false,
+      "bodyTextLen": 384,
+      "bodyTextHash": "78bc219951a927380ae0603c697d768b83c7da7edbefc6e3f6006ce8c4c8732c",
+      "bodyTextPrefix": "cdxi | vantage THE BUSINESS OPERATING PLATFORM SECURE WORKSPACE ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/login.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "cdxi vantage",
+      "hasCanvas": false,
+      "bodyTextLen": 384,
+      "bodyTextHash": "78bc219951a927380ae0603c697d768b83c7da7edbefc6e3f6006ce8c4c8732c",
+      "bodyTextPrefix": "cdxi | vantage THE BUSINESS OPERATING PLATFORM SECURE WORKSPACE ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/login-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/login.json"
+}

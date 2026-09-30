@@ -1,0 +1,101 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:2:1-46:12
+INJECTED from /workspace/android-app/app/src/main/AndroidManifest.xml:2:1-46:12
+INJECTED from /workspace/android-app/app/src/main/AndroidManifest.xml:2:1-46:12
+INJECTED from /workspace/android-app/app/src/main/AndroidManifest.xml:2:1-46:12
+	package
+		INJECTED from /workspace/android-app/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /workspace/android-app/app/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /workspace/android-app/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.INTERNET
+ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:4:5-67
+	android:name
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:4:22-64
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:5:5-79
+	android:name
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:5:22-76
+supports-screens
+ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:7:5-13:40
+	android:largeScreens
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:9:9-36
+	android:smallScreens
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:12:9-36
+	android:normalScreens
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:10:9-37
+	android:xlargeScreens
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:13:9-37
+	android:resizeable
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:11:9-34
+	android:anyDensity
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:8:9-34
+application
+ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:15:5-45:19
+INJECTED from /workspace/android-app/app/src/main/AndroidManifest.xml:15:5-45:19
+	android:extractNativeLibs
+		INJECTED from /workspace/android-app/app/src/main/AndroidManifest.xml
+	android:supportsRtl
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:21:9-35
+	android:label
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:18:9-41
+	android:resizeableActivity
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:20:9-42
+	android:icon
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:17:9-43
+	android:allowBackup
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:16:9-35
+	android:theme
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:22:9-45
+	android:networkSecurityConfig
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:19:9-69
+	android:usesCleartextTraffic
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:23:9-45
+meta-data#android.max_aspect
+ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:25:9-27:35
+	android:value
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:27:13-32
+	android:name
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:26:13-46
+activity#digital.cdxi.vantage.MainActivity
+ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:29:9-39:20
+	android:launchMode
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:33:13-44
+	android:windowSoftInputMode
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:34:13-55
+	android:exported
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:32:13-36
+	android:configChanges
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:31:13-146
+	android:name
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:30:13-41
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:35:13-38:29
+action#android.intent.action.MAIN
+ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:36:17-69
+	android:name
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:36:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:37:17-77
+	android:name
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:37:27-74
+activity#digital.cdxi.vantage.SetupActivity
+ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:41:9-44:58
+	android:windowSoftInputMode
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:44:13-55
+	android:exported
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:43:13-37
+	android:name
+		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:42:13-42
+uses-sdk
+INJECTED from /workspace/android-app/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /workspace/android-app/app/src/main/AndroidManifest.xml
+INJECTED from /workspace/android-app/app/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /workspace/android-app/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /workspace/android-app/app/src/main/AndroidManifest.xml

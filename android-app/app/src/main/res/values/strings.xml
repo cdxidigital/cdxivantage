@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">cdxi vantage</string>
+    <string name="setup_title">Connect this workspace</string>
+    <string name="setup_copy">Enter the HTTPS address of your vantage workspace. The app wraps that signed-in operating view on this device.</string>
+    <string name="setup_hint">https://your-workspace.example</string>
+    <string name="setup_action">Open workspace</string>
+    <string name="setup_invalid">Use a full https:// address for the workspace.</string>
+    <string name="error_title">Could not reach vantage</string>
+    <string name="error_retry">Try again</string>
+    <string name="error_change">Change workspace</string>
+    <string name="menu_reload">Reload</string>
+    <string name="menu_change">Change workspace</string>
+</resources>

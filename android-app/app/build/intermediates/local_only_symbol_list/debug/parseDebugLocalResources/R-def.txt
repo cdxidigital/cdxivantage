@@ -1,0 +1,30 @@
+R_DEF: Internal format may change without notice
+local
+color brand
+color canvas
+color cyan
+color ink
+color line
+color muted
+color navy
+color navy_2
+color paper
+id open_workspace
+id setup_error
+id workspace_url
+layout activity_setup
+mipmap ic_launcher
+mipmap ic_launcher_foreground
+string app_name
+string error_change
+string error_retry
+string error_title
+string menu_change
+string menu_reload
+string setup_action
+string setup_copy
+string setup_hint
+string setup_invalid
+string setup_title
+style Theme.Vantage
+xml network_security_config

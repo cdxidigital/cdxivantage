@@ -1,0 +1,54 @@
+plugins {
+    id "com.android.application"
+}
+
+def workspaceHost = System.getenv("VITE_PUBLIC_HOSTNAME") ?: ""
+def defaultUrl = ""
+if (workspaceHost) {
+    defaultUrl = workspaceHost.startsWith("http") ? workspaceHost : "https://${workspaceHost}"
+}
+
+android {
+    namespace "digital.cdxi.vantage"
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "digital.cdxi.vantage"
+        minSdk 26
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+        resConfigs "en"
+        buildConfigField "String", "DEFAULT_URL", "\"${defaultUrl}\""
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            applicationIdSuffix ""
+        }
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    packaging {
+        jniLibs {
+            useLegacyPackaging false
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8"
+}

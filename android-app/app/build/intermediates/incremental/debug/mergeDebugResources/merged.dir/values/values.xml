@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="brand">#7F00FF</color>
+    <color name="canvas">#F3F5F8</color>
+    <color name="cyan">#00E7F0</color>
+    <color name="ink">#1B2430</color>
+    <color name="line">#E1E6EE</color>
+    <color name="muted">#6A7688</color>
+    <color name="navy">#101D33</color>
+    <color name="navy_2">#17263F</color>
+    <color name="paper">#FFFFFF</color>
+    <string name="app_name">cdxi vantage</string>
+    <string name="error_change">Change workspace</string>
+    <string name="error_retry">Try again</string>
+    <string name="error_title">Could not reach vantage</string>
+    <string name="menu_change">Change workspace</string>
+    <string name="menu_reload">Reload</string>
+    <string name="setup_action">Open workspace</string>
+    <string name="setup_copy">Enter the HTTPS address of your vantage workspace. The app wraps that signed-in operating view on this device.</string>
+    <string name="setup_hint">https://your-workspace.example</string>
+    <string name="setup_invalid">Use a full https:// address for the workspace.</string>
+    <string name="setup_title">Connect this workspace</string>
+    <style name="Theme.Vantage" parent="@android:style/Theme.DeviceDefault.NoActionBar">
+        <item name="android:statusBarColor">@color/navy</item>
+        <item name="android:navigationBarColor">@color/navy</item>
+        <item name="android:windowBackground">@color/navy</item>
+        <item name="android:navigationBarDividerColor">@color/navy</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:colorPrimary">@color/brand</item>
+        <item name="android:colorAccent">@color/brand</item>
+        <item name="android:textColorPrimary">@color/paper</item>
+        <item name="android:editTextColor">@color/ink</item>
+    </style>
+</resources>

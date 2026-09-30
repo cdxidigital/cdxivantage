@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/canvas"
+    android:fillViewport="true"
+    android:clipToPadding="false"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="28dp"
+    android:paddingBottom="28dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="24dp"
+        android:paddingBottom="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/paper"
+            android:elevation="6dp"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:letterSpacing="0.04"
+                android:text="cdxi  |  vantage"
+                android:textAllCaps="false"
+                android:textColor="@color/ink"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:letterSpacing="0.12"
+                android:text="THE BUSINESS OPERATING PLATFORM"
+                android:textColor="@color/muted"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:text="@string/setup_title"
+                android:textColor="@color/ink"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:lineSpacingMultiplier="1.35"
+                android:text="@string/setup_copy"
+                android:textColor="@color/muted"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/workspace_url"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="18dp"
+                android:autofillHints="username"
+                android:background="@color/canvas"
+                android:hint="@string/setup_hint"
+                android:inputType="textUri"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp"
+                android:textColor="@color/ink"
+                android:textColorHint="@color/muted"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/setup_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="#B42318"
+                android:textSize="13sp"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/open_workspace"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/brand"
+                android:text="@string/setup_action"
+                android:textAllCaps="false"
+                android:textColor="@color/paper"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
