@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "cdxi vantage",
+      "hasCanvas": false,
+      "bodyTextLen": 1530,
+      "bodyTextHash": "39f82269607b29cd5922eedc4fcd785ec0d9aa1f50906de911bf9c65eebb9fc8",
+      "bodyTextPrefix": "cdxi | vantage Sign in Create workspace THE BUSINESS OPERATING P",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/audit-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "cdxi vantage",
+      "hasCanvas": false,
+      "bodyTextLen": 1466,
+      "bodyTextHash": "23550a5155408abf0984ae7e07a2f05b04e068101cb90537bf2ccd67023ec6e0",
+      "bodyTextPrefix": "cdxi | vantage Create workspace THE BUSINESS OPERATING PLATFORM ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/audit-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/audit-preview.json"
+}

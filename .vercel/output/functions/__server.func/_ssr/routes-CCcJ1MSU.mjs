@@ -3,16 +3,15 @@ import { V as require_react, v as Link, x as require_jsx_runtime, y as Navigate 
 import { r as createServerFn } from "./ssr.mjs";
 import { t as authMiddleware } from "./middleware-DWjPk7OX.mjs";
 import { a as startOfMonth, d as startOfWeek, f as addMonths, i as endOfWeek, l as isSameDay, n as isSameMonth, o as eachDayOfInterval, r as format, s as endOfMonth, t as parseISO, u as compareAsc } from "../_libs/date-fns.mjs";
-import { B as statusTone, C as formatDuration, D as inRange, E as headingDate, F as relativeFrom, H as weekDays, I as roundHours, L as stageLabel, N as rangeLabel, O as initials, P as rangeStart, R as stageNote, S as fmtDay, T as gstOf, U as workStatusLabel, V as todayIso, b as downloadCsv, c as LAUNCH_AREAS, d as LINKED_SYSTEMS, g as addDaysIso, h as WORK_STATUS, i as DEAL_STAGES, k as money, l as LEDGERS, m as VAULT_KINDS, n as AI_LEVELS, r as CDXI_PACKAGES, t as AI_AGENTS, u as LIFECYCLE_STAGES, v as buildPassport, w as greeting, x as downloadText, y as dealStageLabel, z as startOfWeekIso } from "./lifecycle-B-aIlvx1.mjs";
+import { A as normalizeWorkspace, B as weekDays, C as formatDuration, D as inRange, E as headingDate, F as stageLabel, I as stageNote, L as startOfWeekIso, M as rangeStart, N as relativeFrom, O as initials, P as roundHours, R as statusTone, S as fmtDay, T as gstOf, V as workStatusLabel, _ as createSeed, b as downloadText, c as LIFECYCLE_STAGES, d as VAULT_KINDS, f as WORK_STATUS, g as buildPassport, h as brandCase, i as DEAL_STAGES, j as rangeLabel, k as money, l as LINKED_SYSTEMS, n as AI_LEVELS, o as LAUNCH_AREAS, p as addDaysIso, r as CDXI_PACKAGES, s as LEDGERS, t as AI_AGENTS, u as PORTALS, v as dealStageLabel, w as greeting, x as emptyWorkspace, y as downloadCsv, z as todayIso } from "./seed-BG5wNt-f.mjs";
 import { i as signOut } from "./client-B40BzJxt.mjs";
 import { a as hasGateSessionMarker } from "./server-C02Wrfly.mjs";
 import { a as useCurrentUserState, i as useCurrentUser, n as VantageMark, r as VantageMarkMono, t as VantageLockup } from "./mark-DlNeCDdE.mjs";
-import { A as ChevronLeft, C as FileCheck2, D as Clock3, E as Command, F as Bell, I as ArrowUpRight, L as ArrowDownRight, M as Check, N as CalendarDays, O as CircleHelp, P as BriefcaseBusiness, R as Archive, S as FileText, T as Download, _ as LayoutDashboard, a as Trash2, b as Handshake, c as Sparkles, d as Search, f as Rocket, g as Menu, h as Moon, j as ChevronDown, k as ChevronRight, l as ShieldCheck, m as Play, n as WalletCards, o as Sun, p as Plus, r as UsersRound, s as Square, t as X, u as Settings2, v as Landmark, w as Ellipsis, x as FolderKanban, y as Inbox } from "../_libs/lucide-react.mjs";
-import { n as Route$3, r as createSsrRpc } from "./router-DngkPb0k.mjs";
-import { i as normalizeWorkspace, n as createSeed, r as emptyWorkspace, t as PORTALS } from "./seed-ChAzxHg7.mjs";
+import { A as ChevronRight, C as FileText, D as Command, E as Download, F as BriefcaseBusiness, I as Bell, L as ArrowUpRight, M as ChevronDown, N as Check, O as Clock3, P as CalendarDays, R as ArrowDownRight, S as FolderKanban, T as Ellipsis, _ as LifeBuoy, a as Trash2, b as Inbox, c as Sparkles, d as Search, f as Rocket, g as Menu, h as Moon, j as ChevronLeft, k as CircleHelp, l as ShieldCheck, m as Play, n as WalletCards, o as Sun, p as Plus, r as UsersRound, s as Square, t as X, u as Settings2, v as LayoutDashboard, w as FileCheck2, x as Handshake, y as Landmark, z as Archive } from "../_libs/lucide-react.mjs";
+import { n as Route$3, r as createSsrRpc } from "./router-6srV_knD.mjs";
 import { n as toast, t as Toaster } from "../_libs/sonner.mjs";
 import { t as create } from "../_libs/zustand.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/routes-Ce3TKiMy.js
+//#region node_modules/.nitro/vite/services/ssr/assets/routes-CCcJ1MSU.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 function uid(prefix = "id") {
@@ -43,7 +42,7 @@ function workHoursFromLogs(logs, workId) {
 }
 function workspacePayload(s) {
 	return {
-		workspaceName: s.workspaceName,
+		workspaceName: brandCase(s.workspaceName),
 		profile: s.profile,
 		signedIn: true,
 		customers: s.customers,
@@ -64,7 +63,11 @@ function workspacePayload(s) {
 		theme: s.theme,
 		timer: s.timer,
 		lifecycle: s.lifecycle,
-		business: s.business,
+		business: {
+			...s.business,
+			legalName: brandCase(s.business.legalName),
+			tradingName: brandCase(s.business.tradingName)
+		},
 		ideaCanvas: s.ideaCanvas,
 		launchTasks: s.launchTasks,
 		vault: s.vault,
@@ -106,7 +109,7 @@ var useVantage = create()((set, get) => ({
 	setModule: (module) => set({ module }),
 	setRange: (range) => set({ range }),
 	dismissNotice: () => set({ noticeVisible: false }),
-	setWorkspaceName: (workspaceName) => set({ workspaceName }),
+	setWorkspaceName: (workspaceName) => set({ workspaceName: brandCase(workspaceName) }),
 	setProfile: (profile) => {
 		const prev = get().profile;
 		const next = {
@@ -131,7 +134,11 @@ var useVantage = create()((set, get) => ({
 			activities: [stamp(profile, "moved", `Lifecycle → ${lifecycle}`), ...s.activities].slice(0, 40)
 		}));
 	},
-	setBusiness: (business) => set({ business }),
+	setBusiness: (business) => set({ business: {
+		...business,
+		legalName: brandCase(business.legalName),
+		tradingName: brandCase(business.tradingName)
+	} }),
 	setIdeaCanvas: (ideaCanvas) => set({ ideaCanvas }),
 	addCustomer: (c) => {
 		const id = uid("cus");
@@ -863,9 +870,19 @@ function insightSnapshot(data) {
 		lifecycle: data.lifecycle,
 		business: {
 			legalName: data.business.legalName,
+			tradingName: data.business.tradingName,
 			abn: data.business.abn,
+			entityType: data.business.entityType,
+			state: data.business.state || "WA",
+			industry: data.business.industry,
 			stage: data.lifecycle
 		},
+		accountant: data.accountant?.name ? {
+			name: data.accountant.name,
+			firm: data.accountant.firm,
+			email: data.accountant.email
+		} : null,
+		ledger: data.ledger,
 		launchOpen: openLaunch(data).map((t) => ({
 			title: t.title,
 			due: t.due,
@@ -904,6 +921,110 @@ var SIGN_IN_PATH = "/login";
 function RedirectToSignIn({ to = SIGN_IN_PATH }) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Navigate, { to });
 }
+function AssistDialog({ moduleLabel, onClose }) {
+	const data = useVantage();
+	const brief = useVantage((s) => s.agentBriefs.assist);
+	const level = useVantage((s) => s.aiPermissions.assist ?? "recommend");
+	const setAgentBrief = useVantage((s) => s.setAgentBrief);
+	const [question, setQuestion] = (0, import_react.useState)("");
+	const [busy, setBusy] = (0, import_react.useState)(false);
+	const ask = async () => {
+		setBusy(true);
+		try {
+			const asked = question.trim();
+			const result = await generateInsight({ data: {
+				snapshot: insightSnapshot(data),
+				agent: "assist",
+				level,
+				question: asked ? `On the ${moduleLabel} screen. ${asked}` : `On the ${moduleLabel} screen. What needs attention?`
+			} });
+			if (result.ok) {
+				setAgentBrief("assist", result.brief);
+				toast.success("Assist is ready");
+			} else toast.error(result.error);
+		} catch {
+			toast.error("Assist could not answer just now.");
+		} finally {
+			setBusy(false);
+		}
+	};
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: "dialog-backdrop",
+		onMouseDown: (e) => {
+			if (e.target === e.currentTarget) onClose();
+		},
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
+			className: "create-dialog assist-dialog",
+			role: "dialog",
+			"aria-modal": "true",
+			"aria-labelledby": "assist-title",
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "dialog-header",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+						className: "panel-kicker",
+						children: "Workspace · Australian business law"
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
+						id: "assist-title",
+						children: "Assist"
+					})] }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+						className: "icon-button",
+						onClick: onClose,
+						"aria-label": "Close assist",
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(X, { size: 18 })
+					})]
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+					className: "assist-note",
+					children: "Ask about a problem on this page, or about business law in any state or territory. This is general information, not legal advice. Confirm with a lawyer or your accountant before you rely on it."
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "field assist-ask",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", {
+						htmlFor: "assist-question",
+						children: "What's the issue?"
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("textarea", {
+						id: "assist-question",
+						value: question,
+						onChange: (e) => setQuestion(e.target.value),
+						placeholder: "Example: hired in Queensland, company is in WA — which workers compensation scheme?",
+						maxLength: 800
+					})]
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "dialog-actions",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+						className: "button-ghost",
+						type: "button",
+						onClick: onClose,
+						children: "Close"
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+						className: "button-primary",
+						type: "button",
+						onClick: () => void ask(),
+						disabled: busy,
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LifeBuoy, { size: 15 }), busy ? "Looking…" : "Ask"]
+					})]
+				}),
+				brief && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "assist-result",
+					children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { children: brief.headline }),
+						brief.priorities.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+							className: "panel-kicker",
+							children: "What to do"
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", { children: brief.priorities.map((line) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: line }, line)) })] }),
+						brief.risks.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+							className: "panel-kicker",
+							children: "Watch"
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", { children: brief.risks.map((line) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: line }, line)) })] }),
+						brief.nextMove && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: brief.nextMove })
+					]
+				})
+			]
+		})
+	});
+}
 function MetricCard({ label, value, change, note, trend, icon: Icon }) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: "metric-card",
@@ -920,9 +1041,9 @@ function MetricCard({ label, value, change, note, trend, icon: Icon }) {
 				children: value
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: `metric-change ${trend === "down" ? "negative" : "positive"}`,
+				className: `metric-change ${trend === "down" ? "negative" : trend === "up" ? "positive" : ""}`,
 				children: [
-					trend === "down" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowDownRight, { size: 14 }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowUpRight, { size: 14 }),
+					trend === "down" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowDownRight, { size: 14 }) : trend === "up" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowUpRight, { size: 14 }) : null,
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("b", { children: change }),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: note })
 				]
@@ -1016,7 +1137,7 @@ function LifecycleRail() {
 				children: "Command centre"
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h2", { children: [
-				data.business.tradingName || data.workspaceName,
+				brandCase(data.business.tradingName || data.workspaceName),
 				" is in ",
 				LIFECYCLE_STAGES.find((s) => s.id === lifecycle)?.label,
 				"."
@@ -1059,6 +1180,7 @@ function InsightPanel() {
 	const data = useVantage();
 	const [busy, setBusy] = (0, import_react.useState)(false);
 	const [agent, setAgent] = (0, import_react.useState)("ceo");
+	const [question, setQuestion] = (0, import_react.useState)("");
 	const current = agent === "ceo" ? agentBriefs.ceo ?? insight : agentBriefs[agent] ?? null;
 	const meta = AI_AGENTS.find((a) => a.id === agent);
 	const run = async () => {
@@ -1067,7 +1189,8 @@ function InsightPanel() {
 			const result = await generateInsight({ data: {
 				snapshot: insightSnapshot(data),
 				agent,
-				level: aiPermissions[agent]
+				level: aiPermissions[agent] ?? "recommend",
+				question: agent === "assist" && question.trim() ? question.trim() : void 0
 			} });
 			if (result.ok) {
 				setAgentBrief(agent, result.brief);
@@ -1106,6 +1229,26 @@ function InsightPanel() {
 					onClick: () => setAgent(item.id),
 					children: item.title.replace("Vantage ", "")
 				}, item.id))
+			}),
+			agent === "assist" && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: "field assist-ask",
+				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", {
+						htmlFor: "assist-brief",
+						children: "What's the issue?"
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("textarea", {
+						id: "assist-brief",
+						value: question,
+						onChange: (e) => setQuestion(e.target.value),
+						placeholder: "A problem on this workspace, or business law in a state.",
+						maxLength: 800
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+						className: "assist-note",
+						children: "General information, not legal advice. Confirm with a lawyer or your accountant before you rely on it."
+					})
+				]
 			}),
 			current ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 				className: "insight-grid",
@@ -1170,7 +1313,7 @@ function Overview({ onCreate }) {
 	const now = /* @__PURE__ */ new Date();
 	const revenue = paidRevenue(data.finance, range, now);
 	const prev = previousRevenue(data.finance, range, now);
-	const delta = prev === 0 ? revenue > 0 ? 100 : 0 : Math.round((revenue - prev) / prev * 100);
+	const delta = prev > 0 ? Math.round((revenue - prev) / prev * 100) : null;
 	const customers = activeCustomers(data).length;
 	const open = openWork(data).length;
 	const outstanding = outstandingTotal(data.finance);
@@ -1243,9 +1386,9 @@ function Overview({ onCreate }) {
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetricCard, {
 					label: "Revenue",
 					value: money(revenue),
-					change: prev ? `${delta > 0 ? "+" : ""}${delta}%` : "This period",
-					note: prev ? `from ${money(prev)}` : "No prior period",
-					trend: delta < 0 ? "down" : "up",
+					change: delta === null ? "This period" : `${delta > 0 ? "+" : ""}${delta}%`,
+					note: delta === null ? "No prior period" : `from ${money(prev)}`,
+					trend: delta === null || delta === 0 ? "flat" : delta < 0 ? "down" : "up",
 					icon: WalletCards
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(MetricCard, {
@@ -1296,16 +1439,17 @@ function Overview({ onCreate }) {
 						className: "chart-summary",
 						children: [
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", { children: money(revenue) }),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-								className: delta < 0 ? "negative" : "positive",
+							delta === null ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "No prior period" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+								className: delta < 0 ? "negative" : delta > 0 ? "positive" : "",
 								children: [
-									delta < 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowDownRight, { size: 14 }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowUpRight, { size: 14 }),
+									delta < 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowDownRight, { size: 14 }) : delta > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowUpRight, { size: 14 }) : null,
 									" ",
-									Math.abs(delta),
+									delta > 0 ? "+" : "",
+									delta,
 									"%"
 								]
 							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: prev ? `from ${money(prev)}` : "this period" })
+							delta !== null && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { children: ["from ", money(prev)] })
 						]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Sparkline, { series })
@@ -3869,7 +4013,7 @@ function ReportsView() {
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", { children: "Business Passport" })] })
 			}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { children: [
 				"A hand-over-ready snapshot of ",
-				data.business.legalName || data.workspaceName,
+				brandCase(data.business.legalName || data.workspaceName),
 				data.business.abn ? ` · ABN ${data.business.abn}` : "",
 				" · stage ",
 				stageLabel(data.lifecycle),
@@ -4088,7 +4232,7 @@ var STEPS = [
 		module: "settings",
 		kicker: "8 · You're in",
 		title: "Make it yours",
-		body: "Name the business, set what the agents may do, and install vantage on your phone. Create the first record whenever you are ready — you can replay this tour from Shortcuts."
+		body: "Name the business, set what the agents may do, and use Assist on any page when something breaks or a state-law question comes up. You can replay this tour from Shortcuts."
 	}
 ];
 function useInstallPrompt() {
@@ -4270,7 +4414,7 @@ function SettingsView() {
 								id: "ws-name",
 								name: "workspace",
 								defaultValue: workspaceName
-							})]
+							}, workspaceName)]
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							className: "dialog-actions",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
@@ -4328,7 +4472,7 @@ function SettingsView() {
 									id: "b-legal",
 									name: "legalName",
 									defaultValue: business.legalName
-								})]
+								}, business.legalName)]
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 								className: "field",
@@ -4339,7 +4483,7 @@ function SettingsView() {
 									id: "b-trade",
 									name: "tradingName",
 									defaultValue: business.tradingName
-								})]
+								}, business.tradingName)]
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 								className: "field",
@@ -4472,7 +4616,7 @@ function SettingsView() {
 						children: "AI layer"
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", { children: "Agent permissions" }),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: "Observe, recommend, or prepare. Agents never execute. Briefs run only when you ask." }),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: "Observe, recommend, or prepare. Assist covers workspace issues and Australian business law. Agents never execute. Briefs run only when you ask." }),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
 						className: "perm-list",
 						children: AI_AGENTS.map((agent) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", { children: agent.title }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: agent.brief })] }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("select", {
@@ -6748,6 +6892,7 @@ function WorkspaceSkeleton() {
 }
 function Workspace() {
 	const data = useVantage();
+	const workspaceLabel = brandCase(data.workspaceName);
 	const [menuOpen, setMenuOpen] = (0, import_react.useState)(false);
 	const [notifyOpen, setNotifyOpen] = (0, import_react.useState)(false);
 	const [mobileMenuOpen, setMobileMenuOpen] = (0, import_react.useState)(false);
@@ -6755,6 +6900,7 @@ function Workspace() {
 	const [showCreate, setShowCreate] = (0, import_react.useState)(false);
 	const [createKind, setCreateKind] = (0, import_react.useState)(null);
 	const [showHelp, setShowHelp] = (0, import_react.useState)(false);
+	const [showAssist, setShowAssist] = (0, import_react.useState)(false);
 	const [signingOut, setSigningOut] = (0, import_react.useState)(false);
 	const gateSession = (0, import_react.useSyncExternalStore)(subscribeToNothing, hasGateSessionMarker, () => false);
 	const openCount = openWork(data).length;
@@ -6789,6 +6935,7 @@ function Workspace() {
 				setMobileMenuOpen(false);
 				setShowCreate(false);
 				setShowHelp(false);
+				setShowAssist(false);
 			}
 			if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
 				event.preventDefault();
@@ -6811,6 +6958,9 @@ function Workspace() {
 	(0, import_react.useEffect)(() => {
 		document.documentElement.dataset.theme = data.theme || "light";
 	}, [data.theme]);
+	(0, import_react.useEffect)(() => {
+		document.querySelector(".primary-nav [aria-current='page'], .primary-nav [data-module].active")?.scrollIntoView({ block: "nearest" });
+	}, [data.module]);
 	(0, import_react.useEffect)(() => {
 		if (!data.hydrated) return;
 		let timer = 0;
@@ -6879,11 +7029,11 @@ function Workspace() {
 						children: [
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 								className: "workspace-avatar",
-								children: data.workspaceName.slice(0, 1)
+								children: workspaceLabel.slice(0, 1)
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 								className: "workspace-name",
-								children: data.workspaceName
+								children: workspaceLabel
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronDown, { size: 14 })
 						]
@@ -6946,6 +7096,7 @@ function Workspace() {
 								className: `nav-item ${data.module === "reports" ? "active" : ""}`,
 								"data-module": "reports",
 								onClick: () => navigate("reports"),
+								"aria-current": data.module === "reports" ? "page" : void 0,
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FileText, {
 									size: 17,
 									strokeWidth: 1.8
@@ -6955,6 +7106,7 @@ function Workspace() {
 								className: `nav-item ${data.module === "settings" ? "active" : ""}`,
 								"data-module": "settings",
 								onClick: () => navigate("settings"),
+								"aria-current": data.module === "settings" ? "page" : void 0,
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Settings2, {
 									size: 17,
 									strokeWidth: 1.8
@@ -7009,7 +7161,7 @@ function Workspace() {
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 								className: "breadcrumbs",
 								children: [
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: data.workspaceName }),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: workspaceLabel }),
 									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 										className: "slash",
 										children: "/"
@@ -7122,19 +7274,28 @@ function Workspace() {
 									})
 								] }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 									className: "heading-actions",
-									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("select", {
-										value: data.range,
-										onChange: (e) => data.setRange(e.target.value),
-										"aria-label": "Date range",
-										children: RANGE_OPTIONS.map((opt) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", {
-											value: opt.id,
-											children: opt.label
-										}, opt.id))
-									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
-										className: "button-primary",
-										onClick: () => openCreate(),
-										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Plus, { size: 17 }), " Create new"]
-									})]
+									children: [
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("select", {
+											value: data.range,
+											onChange: (e) => data.setRange(e.target.value),
+											"aria-label": "Date range",
+											children: RANGE_OPTIONS.map((opt) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", {
+												value: opt.id,
+												children: opt.label
+											}, opt.id))
+										}),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+											className: "button-ghost",
+											type: "button",
+											onClick: () => setShowAssist(true),
+											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LifeBuoy, { size: 16 }), " Assist"]
+										}),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+											className: "button-primary",
+											onClick: () => openCreate(),
+											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Plus, { size: 17 }), " Create new"]
+										})
+									]
 								})]
 							}),
 							data.noticeVisible && data.module === "overview" && attention > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -7184,7 +7345,7 @@ function Workspace() {
 									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "cdxi | vantage" }),
 									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Build it. Run it. Grow it. Exit it." }),
 									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { children: [
-										data.workspaceName,
+										workspaceLabel,
 										" · ",
 										rangeLabel(data.range)
 									] })
@@ -7198,6 +7359,10 @@ function Workspace() {
 							setShowCreate(false);
 							setCreateKind(null);
 						}
+					}),
+					showAssist && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AssistDialog, {
+						moduleLabel: activeLabel,
+						onClose: () => setShowAssist(false)
 					}),
 					showHelp && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 						className: "dialog-backdrop",
@@ -7233,6 +7398,10 @@ function Workspace() {
 										/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("dt", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("kbd", { children: "?" }) }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("dd", { children: "Show shortcuts" })] }),
 										/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("dt", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("kbd", { children: "Esc" }) }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("dd", { children: "Close overlay" })] })
 									]
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+									className: "assist-note",
+									children: "Assist sits on every page for a workspace problem or a question of Australian business law."
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 									className: "dialog-actions",
@@ -7330,6 +7499,30 @@ var FEATURES = [
 		copy: "ASIC, BAS, and lodgement dates surface before they become a scramble."
 	}
 ];
+var SAMPLE = createSeed();
+var SAMPLE_HOURS = hoursThisWeek(SAMPLE);
+var PREVIEW_COLUMNS = [
+	{
+		label: "In progress",
+		status: "in-progress"
+	},
+	{
+		label: "Needs review",
+		status: "needs-review"
+	},
+	{
+		label: "Scheduled",
+		status: "scheduled"
+	}
+];
+function compactMoney(amount) {
+	if (Math.abs(amount) >= 1e3) {
+		const thousands = amount / 1e3;
+		const rounded = thousands >= 100 ? Math.round(thousands) : Math.round(thousands * 10) / 10;
+		return `$${Number.isInteger(rounded) ? rounded : rounded}k`;
+	}
+	return `$${Math.round(amount)}`;
+}
 function LandingPage() {
 	(0, import_react.useLayoutEffect)(() => {
 		document.documentElement.dataset.theme = "light";
@@ -7408,27 +7601,19 @@ function LandingPage() {
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 								className: "land-preview-metrics",
 								children: [
-									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("article", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Pipeline" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", { children: "$186k" })] }),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("article", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Open work" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", { children: "12" })] }),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("article", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Hours this week" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", { children: "41.5" })] }),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("article", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Attention" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", { children: "6" })] })
+									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("article", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Pipeline" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", { children: compactMoney(pipelineValue(SAMPLE)) })] }),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("article", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Open work" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", { children: openWork(SAMPLE).length })] }),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("article", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Hours this week" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", { children: Number.isInteger(SAMPLE_HOURS) ? SAMPLE_HOURS : SAMPLE_HOURS.toFixed(1) })] }),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("article", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Attention" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", { children: attentionCount(SAMPLE) })] })
 								]
 							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 								className: "land-preview-board",
-								children: [
-									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Proposal" }),
-										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: "Karratha ops advisory" }),
-										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: "Harbour Dental onboarding" })
-									] }),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "In progress" }),
-										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: "Q3 executive review" }),
-										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: "Westport extra capacity" })
-									] }),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Needs review" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: "BAS Q1 lodgement" })] })
-								]
+								children: PREVIEW_COLUMNS.map((column) => {
+									const titles = SAMPLE.work.filter((item) => item.status === column.status).slice(0, 2);
+									if (titles.length === 0) return null;
+									return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: column.label }), titles.map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: item.title }, item.id))] }, column.status);
+								})
 							})
 						]
 					})

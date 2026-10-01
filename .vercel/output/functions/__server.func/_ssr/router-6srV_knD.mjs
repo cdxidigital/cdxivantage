@@ -4,7 +4,7 @@ import { a as getServerFnById, i as TSS_SERVER_FUNCTION, r as createServerFn, s 
 import { L as string, N as number, P as object, R as union, j as literal } from "../_libs/@better-auth/core+[...].mjs";
 import { n as auth } from "./server-C02Wrfly.mjs";
 import { i as TriangleAlert } from "../_libs/lucide-react.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/router-DngkPb0k.js
+//#region node_modules/.nitro/vite/services/ssr/assets/router-6srV_knD.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var FALLBACK_MESSAGE = "An unexpected error occurred. Try reloading the page.";
@@ -335,7 +335,7 @@ function ViewportFit() {
 	}, []);
 	return null;
 }
-var styles_default = "/assets/styles-IAvmIW00.css";
+var styles_default = "/assets/styles-BUzCq359.css";
 var APP_NAME = "cdxi vantage";
 var fetchSessionUser = createServerFn({ method: "GET" }).handler(createSsrRpc("2c4985e96c199268f7f639534cb5e8e31d6b19d43286bf77416413db60ffde26"));
 var Route$4 = createRootRoute({
@@ -411,7 +411,7 @@ var Route$4 = createRootRoute({
 		})]
 	})
 });
-var $$splitComponentImporter$2 = () => import("./routes-Ce3TKiMy.mjs");
+var $$splitComponentImporter$2 = () => import("./routes-CCcJ1MSU.mjs");
 var Route$3 = createFileRoute("/")({ component: lazyRouteComponent($$splitComponentImporter$2, "component") });
 var $$splitComponentImporter$1 = () => import("./login-tqIwjll-.mjs");
 var Route$2 = createFileRoute("/login")({ component: lazyRouteComponent($$splitComponentImporter$1, "component") });
@@ -420,7 +420,7 @@ var Route$1 = createFileRoute("/signup")({ component: lazyRouteComponent($$split
 var Route = createFileRoute("/api/auth/$")({ server: { handlers: {
 	GET: ({ request }) => auth.handler(request),
 	POST: async ({ request }) => {
-		const { ensureSeedAccounts } = await import("./seed-accounts.server-BMuYefXC.mjs");
+		const { ensureSeedAccounts } = await import("./seed-accounts.server-CbLt1OVL.mjs");
 		await ensureSeedAccounts();
 		return auth.handler(request);
 	}

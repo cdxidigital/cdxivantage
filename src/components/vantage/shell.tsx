@@ -222,6 +222,11 @@ function Workspace() {
   }, [data.theme]);
 
   useEffect(() => {
+    const current = document.querySelector<HTMLElement>(".primary-nav [aria-current='page'], .primary-nav [data-module].active");
+    current?.scrollIntoView({ block: "nearest" });
+  }, [data.module]);
+
+  useEffect(() => {
     if (!data.hydrated) return;
     let timer = 0;
     const unsub = useVantage.subscribe((state) => {
@@ -368,6 +373,7 @@ function Workspace() {
             className={`nav-item ${data.module === "reports" ? "active" : ""}`}
             data-module="reports"
             onClick={() => navigate("reports")}
+            aria-current={data.module === "reports" ? "page" : undefined}
           >
             <FileText size={17} strokeWidth={1.8} />
             <span>Reports</span>
@@ -376,6 +382,7 @@ function Workspace() {
             className={`nav-item ${data.module === "settings" ? "active" : ""}`}
             data-module="settings"
             onClick={() => navigate("settings")}
+            aria-current={data.module === "settings" ? "page" : undefined}
           >
             <Settings2 size={17} strokeWidth={1.8} />
             <span>Settings</span>

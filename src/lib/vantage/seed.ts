@@ -11,7 +11,7 @@ import type {
   VantageData,
   WorkItem,
 } from "./types";
-import { brandCase, gstOf, initials } from "./format";
+import { addDaysIso, brandCase, gstOf, initials, relativeFrom, todayIso } from "./format";
 import {
   DEFAULT_AI_PERMISSIONS,
   EMPTY_BUSINESS,
@@ -504,8 +504,81 @@ export function emptyWorkspace(
   };
 }
 
-export function createSeed(): VantageData {
+/** The Northline sample was written as if this day were "today". */
+const DEMO_AS_OF = "2026-09-10";
+
+function demoShiftDays(now = new Date()) {
+  const from = Date.parse(`${DEMO_AS_OF}T00:00:00Z`);
+  const to = Date.parse(`${todayIso(now)}T00:00:00Z`);
+  if (!Number.isFinite(from) || !Number.isFinite(to)) return 0;
+  return Math.round((to - from) / 86400000);
+}
+
+function shiftKeptDate(current: string, original: string, days: number) {
+  if (days === 0 || current !== original || original < "2026-08-01") return current;
+  const next = addDaysIso(original.slice(0, 10), days);
+  return original.length > 10 ? `${next}${original.slice(10)}` : next;
+}
+
+function alignRows<T extends { id: string }>(rows: T[], originals: T[], keys: (keyof T)[], days: number): T[] {
+  if (days === 0) return rows;
+  const byId = new Map(originals.map((row) => [row.id, row]));
+  return rows.map((row) => {
+    const src = byId.get(row.id);
+    if (!src) return row;
+    const next = { ...row };
+    let changed = false;
+    for (const key of keys) {
+      const value = row[key];
+      const from = src[key];
+      if (typeof value !== "string" || typeof from !== "string") continue;
+      const shifted = shiftKeptDate(value, from, days);
+      if (shifted !== value) {
+        next[key] = shifted as T[keyof T];
+        changed = true;
+      }
+    }
+    return changed ? next : row;
+  });
+}
+
+function alignDemoCollections<T extends Pick<
+  VantageData,
+  | "customers"
+  | "work"
+  | "finance"
+  | "events"
+  | "compliance"
+  | "activities"
+  | "timeLogs"
+  | "deals"
+  | "launchTasks"
+  | "vault"
+>>(data: T, now = new Date()): T {
+  const days = demoShiftDays(now);
+  if (days === 0) return data;
+  const nextActivities = alignRows(data.activities, activities, ["at"], days).map((item) => {
+    const src = activities.find((row) => row.id === item.id);
+    if (!src || item.at === src.at) return item;
+    return { ...item, time: relativeFrom(item.at, now) };
+  });
   return {
+    ...data,
+    customers: alignRows(data.customers, customers, ["followUp"], days),
+    work: alignRows(data.work, work, ["due", "createdAt"], days),
+    finance: alignRows(data.finance, finance, ["date"], days),
+    events: alignRows(data.events, events, ["date"], days),
+    compliance: alignRows(data.compliance, compliance, ["due"], days),
+    activities: nextActivities,
+    timeLogs: alignRows(data.timeLogs, timeLogs, ["date"], days),
+    deals: alignRows(data.deals, deals, ["closeDate"], days),
+    launchTasks: alignRows(data.launchTasks, northlineLaunch(), ["due"], days),
+    vault: alignRows(data.vault, northlineVault(), ["renewsOn"], days),
+  };
+}
+
+export function createSeed(): VantageData {
+  return alignDemoCollections({
     ...emptyWorkspace(DEFAULT_IDENTITY),
     customers: structuredClone(customers),
     work: structuredClone(work),
@@ -525,7 +598,7 @@ export function createSeed(): VantageData {
     offerings: northlineOfferings(),
     linkedSystems: [],
     tourDone: true,
-  };
+  });
 }
 
 function cleanBrief(brief: VantageData["insight"]): VantageData["insight"] {
@@ -582,7 +655,7 @@ export function normalizeWorkspace(raw: VantageData): VantageData {
   const team = (raw.team?.length ? raw.team : teamFromProfile(profile)).map((member) =>
     personDefaults(member),
   );
-  return {
+  const next: VantageData = {
     ...base,
     ...raw,
     workspaceName,
@@ -627,4 +700,5 @@ export function normalizeWorkspace(raw: VantageData): VantageData {
     accountant: cleanAccountant(raw.accountant),
     ledger: cleanLedger(raw.ledger, raw.linkedSystems as readonly string[] | undefined),
   };
+  return looksLikeDemo ? alignDemoCollections(next) : next;
 }

@@ -2,8 +2,8 @@ import { r as createServerFn } from "./ssr.mjs";
 import { t as createServerRpc } from "./createServerRpc-CcvdN_gc.mjs";
 import { r as getSql } from "./db-BPsXT_Zd.mjs";
 import { t as authMiddleware } from "./middleware-DWjPk7OX.mjs";
-import { _ as agentSystemPrompt, a as DEFAULT_AI_PERMISSIONS } from "./lifecycle-B-aIlvx1.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/api-Bug2nS54.js
+import { A as normalizeWorkspace, a as DEFAULT_AI_PERMISSIONS, m as agentSystemPrompt } from "./seed-BG5wNt-f.mjs";
+//#region node_modules/.nitro/vite/services/ssr/assets/api-W_7xm08j.js
 function parsePayload(raw) {
 	if (!raw) return null;
 	if (typeof raw === "string") try {
@@ -20,11 +20,15 @@ var loadWorkspace_createServerFn_handler = createServerRpc({
 	filename: "src/lib/vantage/api.ts"
 }, (opts) => loadWorkspace.__executeServer(opts));
 var loadWorkspace = createServerFn({ method: "GET" }).middleware([authMiddleware]).handler(loadWorkspace_createServerFn_handler, async ({ context }) => {
-	const { ensureSeedAccounts, workspaceForIdentity } = await import("./seed-accounts.server-BMuYefXC.mjs");
+	const { ensureSeedAccounts, workspaceForIdentity } = await import("./seed-accounts.server-CbLt1OVL.mjs");
 	await ensureSeedAccounts();
 	const sql = await getSql();
 	const existing = parsePayload((await sql.query(`select payload from workspaces where user_id = $1 limit 1`, [context.userId]))[0]?.payload);
-	if (existing) return existing;
+	if (existing) {
+		const next = normalizeWorkspace(existing);
+		if (next.workspaceName !== existing.workspaceName || next.business.legalName !== (existing.business?.legalName ?? "") || next.business.tradingName !== (existing.business?.tradingName ?? "")) await sql.query(`update workspaces set payload = $2::jsonb, updated_at = now() where user_id = $1`, [context.userId, JSON.stringify(next)]);
+		return next;
+	}
 	const users = await sql.query(`select email, name from "user" where id = $1 limit 1`, [context.userId]);
 	const payload = workspaceForIdentity({
 		email: users[0]?.email,
@@ -78,6 +82,9 @@ var generateInsight = createServerFn({ method: "POST" }).middleware([authMiddlew
 	};
 	const agent = data.agent ?? "ceo";
 	const level = data.level ?? DEFAULT_AI_PERMISSIONS[agent];
+	const question = String(data.question ?? "").trim().slice(0, 800);
+	const snapshot = JSON.stringify(data.snapshot).slice(0, 6e3);
+	const user = question ? `Operator question: ${question}\n\nWorkspace snapshot:\n${snapshot}` : snapshot;
 	const res = await fetch("https://api.x.ai/v1/chat/completions", {
 		method: "POST",
 		headers: {
@@ -86,14 +93,14 @@ var generateInsight = createServerFn({ method: "POST" }).middleware([authMiddlew
 		},
 		body: JSON.stringify({
 			model: "grok-4.5",
-			temperature: .4,
-			max_tokens: 500,
+			temperature: agent === "assist" ? .2 : .4,
+			max_tokens: agent === "assist" ? 800 : 500,
 			messages: [{
 				role: "system",
 				content: agentSystemPrompt(agent, level)
 			}, {
 				role: "user",
-				content: JSON.stringify(data.snapshot).slice(0, 6e3)
+				content: user
 			}]
 		})
 	});

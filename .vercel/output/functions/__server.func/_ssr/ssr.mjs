@@ -116,7 +116,7 @@ var HEADERS = { TSS_SHELL: "X-TSS_SHELL" };
 * the dev styles URL for route-scoped CSS collection.
 */
 async function getStartManifest(matchedRoutes) {
-	const { tsrStartManifest } = await import("../_tanstack-start-manifest_v-D1pEcM5I.mjs");
+	const { tsrStartManifest } = await import("../_tanstack-start-manifest_v-d-tzzGpI.mjs");
 	const startManifest = tsrStartManifest();
 	let routes = startManifest.routes;
 	routes[rootRouteId];
@@ -142,15 +142,15 @@ var manifest = {
 	},
 	"564951651fa510b3147c022a28e74f533b65f7fa50328e142239fffce0581704": {
 		functionName: "loadWorkspace_createServerFn_handler",
-		importer: () => import("./api-Bug2nS54.mjs")
+		importer: () => import("./api-W_7xm08j.mjs")
 	},
 	"8aa366f4cbf75c7bfa00897b2d8ef1084cc084695ace61de1b7a87bacc2fced9": {
 		functionName: "generateInsight_createServerFn_handler",
-		importer: () => import("./api-Bug2nS54.mjs")
+		importer: () => import("./api-W_7xm08j.mjs")
 	},
 	"d30b5013780a31ee8419df0467d118b32add030f9f743759d2ab2c7e81bc3e85": {
 		functionName: "saveWorkspace_createServerFn_handler",
-		importer: () => import("./api-Bug2nS54.mjs")
+		importer: () => import("./api-W_7xm08j.mjs")
 	}
 };
 async function getServerFnById(id, access) {
@@ -1420,7 +1420,7 @@ var getBaseManifest = getProdBaseManifest;
 var createEarlyHintsForRequest = createEarlyHintsCollector;
 async function loadEntries() {
 	const [routerEntry, startEntry, pluginAdapters] = await Promise.all([
-		import("./router-DngkPb0k.mjs").then((n) => n.t),
+		import("./router-6srV_knD.mjs").then((n) => n.t),
 		import("./start-5Z2QO8AU.mjs"),
 		import("./empty-plugin-adapters-D9UWiqvJ.mjs")
 	]);

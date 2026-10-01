@@ -561,6 +561,42 @@ var LayoutDashboard = createLucideIcon("layout-dashboard", [
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
 */
+var LifeBuoy = createLucideIcon("life-buoy", [
+	["circle", {
+		cx: "12",
+		cy: "12",
+		r: "10",
+		key: "1mglay"
+	}],
+	["path", {
+		d: "m4.93 4.93 4.24 4.24",
+		key: "1ymg45"
+	}],
+	["path", {
+		d: "m14.83 9.17 4.24-4.24",
+		key: "1cb5xl"
+	}],
+	["path", {
+		d: "m14.83 14.83 4.24 4.24",
+		key: "q42g0n"
+	}],
+	["path", {
+		d: "m9.17 14.83-4.24 4.24",
+		key: "bqpfvv"
+	}],
+	["circle", {
+		cx: "12",
+		cy: "12",
+		r: "4",
+		key: "4exip2"
+	}]
+]);
+/**
+* @license lucide-react v0.510.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
 var Menu = createLucideIcon("menu", [
 	["path", {
 		d: "M4 12h16",
@@ -890,4 +926,4 @@ var X = createLucideIcon("x", [["path", {
 	key: "d8bk6v"
 }]]);
 //#endregion
-export { ChevronLeft as A, FileCheck2 as C, Clock3 as D, Command as E, Bell as F, ArrowUpRight as I, ArrowDownRight as L, Check as M, CalendarDays as N, CircleHelp as O, BriefcaseBusiness as P, Archive as R, FileText as S, Download as T, LayoutDashboard as _, Trash2 as a, Handshake as b, Sparkles as c, Search as d, Rocket as f, Menu as g, Moon as h, TriangleAlert as i, ChevronDown as j, ChevronRight as k, ShieldCheck as l, Play as m, WalletCards as n, Sun as o, Plus as p, UsersRound as r, Square as s, X as t, Settings2 as u, Landmark as v, Ellipsis as w, FolderKanban as x, Inbox as y };
+export { ChevronRight as A, FileText as C, Command as D, Download as E, BriefcaseBusiness as F, Bell as I, ArrowUpRight as L, ChevronDown as M, Check as N, Clock3 as O, CalendarDays as P, ArrowDownRight as R, FolderKanban as S, Ellipsis as T, LifeBuoy as _, Trash2 as a, Inbox as b, Sparkles as c, Search as d, Rocket as f, Menu as g, Moon as h, TriangleAlert as i, ChevronLeft as j, CircleHelp as k, ShieldCheck as l, Play as m, WalletCards as n, Sun as o, Plus as p, UsersRound as r, Square as s, X as t, Settings2 as u, LayoutDashboard as v, FileCheck2 as w, Handshake as x, Landmark as y, Archive as z };

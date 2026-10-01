@@ -11,6 +11,7 @@
  */
 import { spawn } from "node:child_process";
 import {
+  copyFileSync,
   existsSync,
   mkdirSync,
   openSync,
@@ -292,8 +293,20 @@ async function waitForReady(failure) {
   return false;
 }
 
+/** Nitro inlines PGLite but leaves its wasm/data siblings behind, which crashes preview. */
+function stagePgliteAssets() {
+  const libs = join(ROOT, ".vercel/output/functions/__server.func/_libs");
+  const dist = join(ROOT, "node_modules/@electric-sql/pglite/dist");
+  if (!existsSync(libs) || !existsSync(dist)) return;
+  for (const name of ["pglite.data", "pglite.wasm", "initdb.wasm"]) {
+    const from = join(dist, name);
+    if (existsSync(from)) copyFileSync(from, join(libs, name));
+  }
+}
+
 async function restart() {
   if (!(await stop())) return 1;
+  stagePgliteAssets();
 
   mkdirSync(dirname(LOG_FILE), { recursive: true });
   const log = openSync(LOG_FILE, "a");

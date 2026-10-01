@@ -55,8 +55,8 @@ function MetricCard({
         </div>
       </div>
       <strong className="metric-value">{value}</strong>
-      <div className={`metric-change ${trend === "down" ? "negative" : "positive"}`}>
-        {trend === "down" ? <ArrowDownRight size={14} /> : <ArrowUpRight size={14} />}
+      <div className={`metric-change ${trend === "down" ? "negative" : trend === "up" ? "positive" : ""}`}>
+        {trend === "down" ? <ArrowDownRight size={14} /> : trend === "up" ? <ArrowUpRight size={14} /> : null}
         <b>{change}</b>
         <span>{note}</span>
       </div>
@@ -311,7 +311,7 @@ export function Overview({ onCreate }: { onCreate: () => void }) {
   const now = new Date();
   const revenue = paidRevenue(data.finance, range, now);
   const prev = previousRevenue(data.finance, range, now);
-  const delta = prev === 0 ? (revenue > 0 ? 100 : 0) : Math.round(((revenue - prev) / prev) * 100);
+  const delta = prev > 0 ? Math.round(((revenue - prev) / prev) * 100) : null;
   const customers = activeCustomers(data).length;
   const open = openWork(data).length;
   const outstanding = outstandingTotal(data.finance);
@@ -376,9 +376,9 @@ export function Overview({ onCreate }: { onCreate: () => void }) {
         <MetricCard
           label="Revenue"
           value={money(revenue)}
-          change={prev ? `${delta > 0 ? "+" : ""}${delta}%` : "This period"}
-          note={prev ? `from ${money(prev)}` : "No prior period"}
-          trend={delta < 0 ? "down" : "up"}
+          change={delta === null ? "This period" : `${delta > 0 ? "+" : ""}${delta}%`}
+          note={delta === null ? "No prior period" : `from ${money(prev)}`}
+          trend={delta === null || delta === 0 ? "flat" : delta < 0 ? "down" : "up"}
           icon={WalletCards}
         />
         <MetricCard
@@ -422,10 +422,16 @@ export function Overview({ onCreate }: { onCreate: () => void }) {
           </div>
           <div className="chart-summary">
             <strong>{money(revenue)}</strong>
-            <span className={delta < 0 ? "negative" : "positive"}>
-              {delta < 0 ? <ArrowDownRight size={14} /> : <ArrowUpRight size={14} />} {Math.abs(delta)}%
-            </span>
-            <span>{prev ? `from ${money(prev)}` : "this period"}</span>
+            {delta === null ? (
+              <span>No prior period</span>
+            ) : (
+              <span className={delta < 0 ? "negative" : delta > 0 ? "positive" : ""}>
+                {delta < 0 ? <ArrowDownRight size={14} /> : delta > 0 ? <ArrowUpRight size={14} /> : null}{" "}
+                {delta > 0 ? "+" : ""}
+                {delta}%
+              </span>
+            )}
+            {delta !== null && <span>from {money(prev)}</span>}
           </div>
           <Sparkline series={series} />
         </section>

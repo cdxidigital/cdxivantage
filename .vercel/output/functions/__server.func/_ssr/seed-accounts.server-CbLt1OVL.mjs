@@ -1,9 +1,8 @@
 import { r as getSql } from "./db-BPsXT_Zd.mjs";
-import { O as initials } from "./lifecycle-B-aIlvx1.mjs";
+import { O as initials, _ as createSeed, h as brandCase, x as emptyWorkspace } from "./seed-BG5wNt-f.mjs";
 import { t as hashPassword$1 } from "./password-VlpK0Xix.mjs";
-import { n as createSeed, r as emptyWorkspace } from "./seed-ChAzxHg7.mjs";
 import { randomBytes } from "node:crypto";
-//#region node_modules/.nitro/vite/services/ssr/assets/seed-accounts.server-BMuYefXC.js
+//#region node_modules/.nitro/vite/services/ssr/assets/seed-accounts.server-CbLt1OVL.js
 var ACCOUNTS = [
 	{
 		email: "alex@cdxi.digital",
@@ -34,7 +33,7 @@ var ACCOUNTS = [
 		password: "DontPanic!",
 		name: "James Parker-Broadmore",
 		role: "Owner",
-		workspaceName: "Fourtee2",
+		workspaceName: "fourtee2",
 		kind: "owner"
 	}
 ];
@@ -43,7 +42,7 @@ function newId() {
 }
 function payloadFor(account) {
 	const identity = {
-		workspaceName: account.workspaceName,
+		workspaceName: brandCase(account.workspaceName),
 		profile: {
 			name: account.name,
 			email: account.email,
@@ -63,9 +62,10 @@ function workspaceForIdentity(input) {
 	const match = ACCOUNTS.find((a) => a.email === email);
 	if (match) return payloadFor(match);
 	const name = input.name?.trim() || email.split("@")[0] || "Operator";
-	const workspaceName = email.includes("@") ? email.split("@")[1]?.split(".")[0] ?? "Workspace" : "Workspace";
+	const root = email.includes("@") ? email.split("@")[1]?.split(".")[0] ?? "Workspace" : "Workspace";
+	const workspaceName = /^fourtee2$/i.test(root) ? "fourtee2" : root.charAt(0).toUpperCase() + root.slice(1);
 	return emptyWorkspace({
-		workspaceName: workspaceName.charAt(0).toUpperCase() + workspaceName.slice(1),
+		workspaceName,
 		profile: {
 			name,
 			email: email || "",

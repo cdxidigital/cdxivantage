@@ -10,6 +10,9 @@ import {
   Sparkles,
 } from "lucide-react";
 import { VantageLockup } from "./mark";
+import { createSeed } from "@/lib/vantage/seed";
+import { attentionCount, hoursThisWeek, openWork, pipelineValue } from "@/lib/vantage/selectors";
+import type { WorkStatus } from "@/lib/vantage/types";
 
 const STAGES = ["Idea", "Start", "Run", "Grow", "Transform", "Exit"] as const;
 
@@ -45,6 +48,23 @@ const FEATURES = [
     copy: "ASIC, BAS, and lodgement dates surface before they become a scramble.",
   },
 ] as const;
+
+const SAMPLE = createSeed();
+const SAMPLE_HOURS = hoursThisWeek(SAMPLE);
+const PREVIEW_COLUMNS: { label: string; status: WorkStatus }[] = [
+  { label: "In progress", status: "in-progress" },
+  { label: "Needs review", status: "needs-review" },
+  { label: "Scheduled", status: "scheduled" },
+];
+
+function compactMoney(amount: number) {
+  if (Math.abs(amount) >= 1000) {
+    const thousands = amount / 1000;
+    const rounded = thousands >= 100 ? Math.round(thousands) : Math.round(thousands * 10) / 10;
+    return `$${Number.isInteger(rounded) ? rounded : rounded}k`;
+  }
+  return `$${Math.round(amount)}`;
+}
 
 export function LandingBoot() {
   useLayoutEffect(() => {
@@ -119,36 +139,34 @@ export function LandingPage() {
             <div className="land-preview-metrics">
               <article>
                 <span>Pipeline</span>
-                <strong>$186k</strong>
+                <strong>{compactMoney(pipelineValue(SAMPLE))}</strong>
               </article>
               <article>
                 <span>Open work</span>
-                <strong>12</strong>
+                <strong>{openWork(SAMPLE).length}</strong>
               </article>
               <article>
                 <span>Hours this week</span>
-                <strong>41.5</strong>
+                <strong>{Number.isInteger(SAMPLE_HOURS) ? SAMPLE_HOURS : SAMPLE_HOURS.toFixed(1)}</strong>
               </article>
               <article>
                 <span>Attention</span>
-                <strong>6</strong>
+                <strong>{attentionCount(SAMPLE)}</strong>
               </article>
             </div>
             <div className="land-preview-board">
-              <div>
-                <span>Proposal</span>
-                <p>Karratha ops advisory</p>
-                <p>Harbour Dental onboarding</p>
-              </div>
-              <div>
-                <span>In progress</span>
-                <p>Q3 executive review</p>
-                <p>Westport extra capacity</p>
-              </div>
-              <div>
-                <span>Needs review</span>
-                <p>BAS Q1 lodgement</p>
-              </div>
+              {PREVIEW_COLUMNS.map((column) => {
+                const titles = SAMPLE.work.filter((item) => item.status === column.status).slice(0, 2);
+                if (titles.length === 0) return null;
+                return (
+                  <div key={column.status}>
+                    <span>{column.label}</span>
+                    {titles.map((item) => (
+                      <p key={item.id}>{item.title}</p>
+                    ))}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>
